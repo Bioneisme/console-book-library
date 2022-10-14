@@ -1,12 +1,14 @@
-import {mainMenu} from "../menu/main-menu";
+import {mainMenu} from "../views/main-menu";
 import Book from "../models/Book";
-import {bookMenu} from "../menu/book-menu";
+import {bookMenu} from "../views/book-menu";
+import {UserClass} from "../controllers/user-controller";
+import {profileMenu} from "../views/profile-menu";
 const prompt = require('prompt-sync')();
 
 interface BookService {
     getAllBooks(): void;
-
     getBookByTitle(): void;
+    addBook(): void;
 }
 
 export class Unauthorized implements BookService {
@@ -16,6 +18,11 @@ export class Unauthorized implements BookService {
     }
 
     getBookByTitle(): void {
+        console.log('You are not authorized!');
+        mainMenu();
+    }
+
+    addBook(): void {
         console.log('You are not authorized!');
         mainMenu();
     }
@@ -43,4 +50,25 @@ export class Authorized implements BookService {
         }
     }
 
+    async addBook(): Promise<void> {
+        const user = UserClass.getInstance();
+        const author = user.getUser()?.username;
+        const title = prompt('Book Title: ');
+        const year = prompt('Year of release: ');
+        const description = prompt('Description: ');
+
+        const newBook = await Book.create({
+            title,
+            author,
+            year,
+            description
+        });
+
+        if (!newBook) {
+            console.log('An error occurred while creating the book');
+            return profileMenu();
+        }
+
+        return bookMenu(newBook);
+    }
 }

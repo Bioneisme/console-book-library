@@ -1,9 +1,12 @@
 import User from "../models/User";
-import {setUser} from "../controllers/user-controller";
+import {UserClass} from "../controllers/user-controller";
 
 interface AuthStrategy {
     signUp(username: string, password: string): Promise<boolean>;
+
     signIn(username: string, password: string): Promise<boolean>;
+
+    logout(): void;
 }
 
 export default new class AuthByUsername implements AuthStrategy {
@@ -12,10 +15,14 @@ export default new class AuthByUsername implements AuthStrategy {
         if (!person) {
             console.log('User with this username doesnt exists!');
             return false;
-        } else {
-            setUser(person._id);
-            return true;
         }
+        if (password != person.password) {
+            console.log('Username or password is incorrect!');
+            return false;
+        }
+        const user = UserClass.getInstance();
+        user.setUser(person);
+        return true;
     }
 
     async signUp(username: string, password: string): Promise<boolean> {
@@ -31,12 +38,18 @@ export default new class AuthByUsername implements AuthStrategy {
         });
 
         if (newUser) {
-            setUser(newUser._id);
+            const user = UserClass.getInstance();
+            user.setUser(newUser);
             return true;
         } else {
             console.log('Error');
             return false;
         }
+    }
+
+    logout(): void {
+        const user = UserClass.getInstance();
+        user.setUser(null);
     }
 
 }

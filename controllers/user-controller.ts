@@ -1,11 +1,29 @@
 import AuthService from "../services/auth-service";
-import {authMenu} from "../menu/auth-menu";
-import {profileMenu} from "../menu/profile-menu";
+import {authMenu} from "../views/auth-menu";
+import {profileMenu} from "../views/profile-menu";
+import {IUser} from "../models/User";
 const prompt = require('prompt-sync')();
 
-export let userID: string;
+export class UserClass {
+    private static instance: UserClass;
+    private user: IUser | null = null;
 
-export const setUser = (id: string) => userID = id;
+    public static getInstance(): UserClass {
+        if (!UserClass.instance) {
+            UserClass.instance = new UserClass();
+        }
+
+        return UserClass.instance;
+    }
+
+    public setUser(user: IUser | null): void {
+        this.user = user;
+    }
+
+    public getUser(): IUser | null {
+        return this.user;
+    }
+}
 
 export default new class UserController {
     async signUp() {
