@@ -31,7 +31,8 @@ export function authMenu(): void {
                 }
             }
         } else {
-            console.log('You cancelled the menu.');
+            console.log('You cancelled the views.');
+            return process.exit();
         }
     })
 }

@@ -14,7 +14,7 @@ export async function bookMenu(book: IBook): Promise<void> {
         {separator: true},
         {hotkey: '?', title: 'Help'},
     ], {
-        header: 'Profile Menu',
+        header: 'Book Menu',
         border: true,
     }).then((item: any) => {
         if (item) {
@@ -31,7 +31,8 @@ export async function bookMenu(book: IBook): Promise<void> {
                 }
             }
         } else {
-            console.log('You cancelled the menu.');
+            console.log('You cancelled the views.');
+            return process.exit();
         }
     })
 }
