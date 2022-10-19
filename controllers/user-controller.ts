@@ -29,6 +29,7 @@ export default new class UserController {
     async signUp() {
         const username = prompt('Username: ');
         const password = prompt('Password: ');
+
         const res = await AuthService.signUp(username, password);
         if (res) {
             await profileMenu();

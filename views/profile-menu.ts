@@ -1,14 +1,14 @@
 import {mainMenu} from "./main-menu";
 import {UserClass} from "../controllers/user-controller";
 import authService from "../services/auth-service";
-import {Authorized, Unauthorized} from "../services/book-service";
+import {BookServiceProxy} from "../services/book-service";
 
 const menu = require('console-menu');
 
 export async function profileMenu(): Promise<void> {
     const user = UserClass.getInstance();
     const userEntity = user.getUser();
-    const book = user.getUser() ? new Authorized() : new Unauthorized();
+    const book = new BookServiceProxy();
 
     menu([
         {hotkey: '1', title: `Username: ${userEntity?.username}`},

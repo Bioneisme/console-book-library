@@ -5,31 +5,14 @@ import {UserClass} from "../controllers/user-controller";
 import {profileMenu} from "../views/profile-menu";
 const prompt = require('prompt-sync')();
 
-interface BookService {
+interface BookServiceI {
     getAllBooks(): void;
     getBookByTitle(): void;
     addBook(): void;
 }
 
-export class Unauthorized implements BookService {
-    getAllBooks(): void {
-        console.log('You are not authorized!');
-        mainMenu();
-    }
 
-    getBookByTitle(): void {
-        console.log('You are not authorized!');
-        mainMenu();
-    }
-
-    addBook(): void {
-        console.log('You are not authorized!');
-        mainMenu();
-    }
-
-}
-
-export class Authorized implements BookService {
+class BookService implements BookServiceI {
     async getAllBooks(): Promise<void> {
         const books = await Book.find();
         books.forEach((book, i) => {
@@ -71,4 +54,42 @@ export class Authorized implements BookService {
 
         return bookMenu(newBook);
     }
+
+    validate(): boolean {
+        const user = UserClass.getInstance();
+        return !!user.getUser();
+    }
+}
+
+export class BookServiceProxy implements BookServiceI {
+    async addBook(): Promise<void> {
+        const bookService = new BookService();
+        if (!bookService.validate()) {
+            console.log('You are not authorized!');
+            return mainMenu();
+        }
+
+        return bookService.addBook();
+    }
+
+    async getAllBooks(): Promise<void> {
+        const bookService = new BookService();
+        if (!bookService.validate()) {
+            console.log('You are not authorized!');
+            return mainMenu();
+        }
+
+        return bookService.getAllBooks();
+    }
+
+    async getBookByTitle(): Promise<void> {
+        const bookService = new BookService();
+        if (!bookService.validate()) {
+            console.log('You are not authorized!');
+            return mainMenu();
+        }
+
+        return bookService.getBookByTitle();
+    }
+
 }

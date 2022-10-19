@@ -1,13 +1,13 @@
 import {authMenu} from "./auth-menu";
 import {profileMenu} from "./profile-menu";
-import {Authorized, Unauthorized} from "../services/book-service";
+import {BookServiceProxy} from "../services/book-service";
 import {UserClass} from "../controllers/user-controller";
 
 const menu = require('console-menu');
 
 export function mainMenu(): void {
     const user = UserClass.getInstance();
-    const book = user.getUser() ? new Authorized() : new Unauthorized();
+    const book = new BookServiceProxy();
 
     menu([
         {hotkey: '1', title: 'Profile'},
