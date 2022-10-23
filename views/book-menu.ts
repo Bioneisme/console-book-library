@@ -1,5 +1,5 @@
-import {mainMenu} from "./main-menu";
 import {IBook} from "../models/Book";
+import menus from "./menus";
 
 const menu = require('console-menu');
 
@@ -20,7 +20,7 @@ export async function bookMenu(book: IBook): Promise<void> {
         if (item) {
             switch (item.hotkey) {
                 case '5': {
-                    return mainMenu();
+                    return menus.mainMenu();
                 }
                 case '?': {
                     console.log('Help Command');

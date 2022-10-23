@@ -1,8 +1,6 @@
-import {mainMenu} from "../views/main-menu";
 import Book from "../models/Book";
-import {bookMenu} from "../views/book-menu";
 import {UserClass} from "../controllers/user-controller";
-import {profileMenu} from "../views/profile-menu";
+import menus from "../views/menus";
 const prompt = require('prompt-sync')();
 
 interface BookServiceI {
@@ -18,7 +16,7 @@ class BookService implements BookServiceI {
         books.forEach((book, i) => {
             console.log(`${i + 1}) ${book.title}. ${book.author} [${book.year}]`);
         });
-        mainMenu();
+        menus.mainMenu();
     }
 
     async getBookByTitle(): Promise<void> {
@@ -26,10 +24,10 @@ class BookService implements BookServiceI {
 
         const book = await Book.findOne({title: title});
         if (book) {
-            await bookMenu(book);
+            await menus.bookMenu(book);
         } else {
             console.log('Book with this title doesnt exists!');
-            mainMenu();
+            menus.mainMenu();
         }
     }
 
@@ -49,10 +47,10 @@ class BookService implements BookServiceI {
 
         if (!newBook) {
             console.log('An error occurred while creating the book');
-            return profileMenu();
+            return menus.profileMenu();
         }
 
-        return bookMenu(newBook);
+        return menus.bookMenu(newBook);
     }
 
     validate(): boolean {
@@ -66,7 +64,7 @@ export class BookServiceProxy implements BookServiceI {
         const bookService = new BookService();
         if (!bookService.validate()) {
             console.log('You are not authorized!');
-            return mainMenu();
+            return menus.mainMenu();
         }
 
         return bookService.addBook();
@@ -76,7 +74,7 @@ export class BookServiceProxy implements BookServiceI {
         const bookService = new BookService();
         if (!bookService.validate()) {
             console.log('You are not authorized!');
-            return mainMenu();
+            return menus.mainMenu();
         }
 
         return bookService.getAllBooks();
@@ -86,7 +84,7 @@ export class BookServiceProxy implements BookServiceI {
         const bookService = new BookService();
         if (!bookService.validate()) {
             console.log('You are not authorized!');
-            return mainMenu();
+            return menus.mainMenu();
         }
 
         return bookService.getBookByTitle();

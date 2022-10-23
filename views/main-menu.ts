@@ -1,7 +1,6 @@
-import {authMenu} from "./auth-menu";
-import {profileMenu} from "./profile-menu";
 import {BookServiceProxy} from "../services/book-service";
 import {UserClass} from "../controllers/user-controller";
+import menus from "./menus";
 
 const menu = require('console-menu');
 
@@ -24,9 +23,9 @@ export function mainMenu(): void {
             switch (item.hotkey) {
                 case '1': {
                     if (!user.getUser()) {
-                        return authMenu();
+                        return menus.authMenu();
                     } else {
-                        return profileMenu();
+                        return menus.profileMenu();
                     }
                 }
                 case '2': {

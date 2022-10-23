@@ -1,5 +1,5 @@
-import {mainMenu} from "./main-menu";
 import UserController from "../controllers/user-controller";
+import menus from "./menus";
 
 const menu = require('console-menu');
 
@@ -23,7 +23,7 @@ export function authMenu(): void {
                     return UserController.signUp();
                 }
                 case '3': {
-                    return mainMenu();
+                    return menus.mainMenu();
                 }
                 default: {
                     console.log('Help Command');
