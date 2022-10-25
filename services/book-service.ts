@@ -1,6 +1,7 @@
 import Book from "../models/Book";
-import {UserClass} from "../controllers/user-controller";
+import {activity, UserClass} from "../controllers/user-controller";
 import menus from "../views/menus";
+import {IUser} from "../models/User";
 const prompt = require('prompt-sync')();
 
 interface BookServiceI {
@@ -8,7 +9,6 @@ interface BookServiceI {
     getBookByTitle(): void;
     addBook(): void;
 }
-
 
 class BookService implements BookServiceI {
     async getAllBooks(): Promise<void> {
@@ -53,40 +53,43 @@ class BookService implements BookServiceI {
         return menus.bookMenu(newBook);
     }
 
-    validate(): boolean {
+    validate(): IUser | null {
         const user = UserClass.getInstance();
-        return !!user.getUser();
+        return user.getUser();
     }
 }
 
 export class BookServiceProxy implements BookServiceI {
     async addBook(): Promise<void> {
         const bookService = new BookService();
-        if (!bookService.validate()) {
+        const user = bookService.validate();
+        if (!user) {
             console.log('You are not authorized!');
             return menus.mainMenu();
         }
-
+        activity.setActivity({user, activity: 'addBook'});
         return bookService.addBook();
     }
 
     async getAllBooks(): Promise<void> {
         const bookService = new BookService();
-        if (!bookService.validate()) {
+        const user = bookService.validate();
+        if (!user) {
             console.log('You are not authorized!');
             return menus.mainMenu();
         }
-
+        activity.setActivity({user, activity: 'getAllBooks'});
         return bookService.getAllBooks();
     }
 
     async getBookByTitle(): Promise<void> {
         const bookService = new BookService();
-        if (!bookService.validate()) {
+        const user = bookService.validate();
+        if (!user) {
             console.log('You are not authorized!');
             return menus.mainMenu();
         }
-
+        activity.setActivity({user, activity: 'getBookByTitle'});
         return bookService.getBookByTitle();
     }
 

@@ -1,5 +1,5 @@
 import User from "../models/User";
-import {UserClass} from "../controllers/user-controller";
+import {activity, UserClass} from "../controllers/user-controller";
 
 interface AuthStrategy {
     signUp(username: string, password: string): Promise<boolean>;
@@ -22,6 +22,7 @@ export default new class AuthByUsername implements AuthStrategy {
         }
         const user = UserClass.getInstance();
         user.setUser(person);
+        activity.setActivity({user: person, activity: 'signIn'});
         return true;
     }
 
@@ -40,6 +41,7 @@ export default new class AuthByUsername implements AuthStrategy {
         if (newUser) {
             const user = UserClass.getInstance();
             user.setUser(newUser);
+            activity.setActivity({user: newUser, activity: 'signUp'});
             return true;
         } else {
             console.log('Error');

@@ -2,7 +2,28 @@ import AuthService from "../services/auth-service";
 import {authMenu} from "../views/auth-menu";
 import {profileMenu} from "../views/profile-menu";
 import {IUser} from "../models/User";
+import logger from "../logging";
 const prompt = require('prompt-sync')();
+
+interface activityState {
+    user: IUser;
+    activity: string;
+}
+
+class activityContext {
+    private activity: activityState | null;
+
+    constructor() {
+        this.activity = null;
+    };
+
+    public setActivity(activity: activityState): void {
+        this.activity = activity;
+        logger.info(`(${activity.user.id}) ${activity.user.username}: ${activity.activity}`);
+    };
+}
+
+export const activity = new activityContext();
 
 export class UserClass {
     private static instance: UserClass;
