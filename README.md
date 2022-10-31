@@ -10,7 +10,7 @@ Simple console application for interactions with books built with NodeJS, TypeSc
 * Design Patterns (Strategy, Singleton, Proxy, Facade, etc.)
 
 ## Screenshots:
-<img src="https://user-images.githubusercontent.com/92920845/198930922-b5ca2316-f1e0-4280-bc6b-d99a5c377aac.png" width="20%"/> <img src="https://user-images.githubusercontent.com/92920845/198930972-86fa235d-f425-4ca7-b5be-d3bca24637a9.png" width="59%"/> <img src="https://user-images.githubusercontent.com/92920845/198931028-bd6717dd-5ebf-46ff-ac6a-96a6e15c1678.png" width="20%"/>
+<img src="https://user-images.githubusercontent.com/92920845/198930922-b5ca2316-f1e0-4280-bc6b-d99a5c377aac.png" width="15%"/> <img src="https://user-images.githubusercontent.com/92920845/198930972-86fa235d-f425-4ca7-b5be-d3bca24637a9.png" width="50%"/> <img src="https://user-images.githubusercontent.com/92920845/198931028-bd6717dd-5ebf-46ff-ac6a-96a6e15c1678.png" width="15%"/>
 
 ## Getting Started
 ### Prerequisites
