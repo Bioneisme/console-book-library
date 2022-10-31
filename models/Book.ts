@@ -5,13 +5,15 @@ export interface IBook extends Document{
     author: string;
     year: number;
     description: string;
+    url: string;
 }
 
 const bookSchema = new Schema<IBook>({
     title: {type: String, required: true},
     author: {type: String, required: true},
     year: {type: Number, required: true},
-    description: {type: String, required: true}
+    description: {type: String, required: true},
+    url: {type: String, required: true}
 });
 
 export default model("Book", bookSchema);

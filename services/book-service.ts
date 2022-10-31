@@ -37,12 +37,14 @@ class BookService implements BookServiceI {
         const title = prompt('Book Title: ');
         const year = prompt('Year of release: ');
         const description = prompt('Description: ');
+        const url = prompt('URL: ');
 
         const newBook = await Book.create({
             title,
             author,
             year,
-            description
+            description,
+            url
         });
 
         if (!newBook) {

@@ -2,7 +2,7 @@ import AuthService from "../services/auth-service";
 import {authMenu} from "../views/auth-menu";
 import {profileMenu} from "../views/profile-menu";
 import {IUser} from "../models/User";
-import logger from "../logging";
+import logger from "../utils/logging";
 const prompt = require('prompt-sync')();
 
 interface activityState {

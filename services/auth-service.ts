@@ -1,5 +1,7 @@
 import User from "../models/User";
 import {activity, UserClass} from "../controllers/user-controller";
+import {decrypt, encrypt} from "../utils/crypto";
+import {SECRET_KEY} from "../utils/config";
 
 interface AuthStrategy {
     signUp(username: string, password: string): Promise<boolean>;
@@ -16,7 +18,9 @@ export default new class AuthByUsername implements AuthStrategy {
             console.log('User with this username doesnt exists!');
             return false;
         }
-        if (password != person.password) {
+        const decryptedPassword = decrypt(SECRET_KEY, person.password);
+
+        if (password != decryptedPassword) {
             console.log('Username or password is incorrect!');
             return false;
         }
@@ -33,9 +37,11 @@ export default new class AuthByUsername implements AuthStrategy {
             return false;
         }
 
+        const encryptedPassword = encrypt(SECRET_KEY, password);
+
         const newUser = await User.create({
             username,
-            password
+            password: encryptedPassword
         });
 
         if (newUser) {
