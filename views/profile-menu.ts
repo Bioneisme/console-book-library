@@ -2,6 +2,7 @@ import {UserClass} from "../controllers/user-controller";
 import authService from "../services/auth-service";
 import {BookServiceProxy} from "../services/book-service";
 import menus from "./menus";
+import {help} from "../utils/commands";
 
 const menu = require('console-menu');
 
@@ -34,7 +35,7 @@ export async function profileMenu(): Promise<void> {
                     return menus.mainMenu();
                 }
                 case '?': {
-                    console.log('Help Command');
+                    console.log(help);
                     return profileMenu();
                 }
                 default: {

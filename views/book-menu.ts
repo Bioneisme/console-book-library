@@ -1,5 +1,6 @@
 import {IBook} from "../models/Book";
 import menus from "./menus";
+import {help} from "../utils/commands";
 
 const menu = require('console-menu');
 
@@ -10,7 +11,8 @@ export async function bookMenu(book: IBook): Promise<void> {
         {hotkey: '2', title: `Author: ${book.author}`},
         {hotkey: '3', title: `Year: ${book.year}`},
         {hotkey: '4', title: `Description: ${book.description}`},
-        {hotkey: '5', title: 'Back'},
+        {hotkey: '5', title: `URL: ${book.url}`},
+        {hotkey: '6', title: 'Back'},
         {separator: true},
         {hotkey: '?', title: 'Help'},
     ], {
@@ -19,11 +21,11 @@ export async function bookMenu(book: IBook): Promise<void> {
     }).then((item: any) => {
         if (item) {
             switch (item.hotkey) {
-                case '5': {
+                case '6': {
                     return menus.mainMenu();
                 }
                 case '?': {
-                    console.log('Help Command');
+                    console.log(help);
                     return bookMenu(book);
                 }
                 default: {

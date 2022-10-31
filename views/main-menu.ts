@@ -1,6 +1,7 @@
 import {BookServiceProxy} from "../services/book-service";
 import {UserClass} from "../controllers/user-controller";
 import menus from "./menus";
+import {help} from "../utils/commands";
 
 const menu = require('console-menu');
 
@@ -39,7 +40,7 @@ export function mainMenu(): void {
                     return process.exit();
                 }
                 default: {
-                    console.log('Help Command');
+                    console.log(help);
                     return mainMenu();
                 }
             }

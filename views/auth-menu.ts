@@ -1,5 +1,6 @@
 import UserController from "../controllers/user-controller";
 import menus from "./menus";
+import {help} from "../utils/commands";
 
 const menu = require('console-menu');
 
@@ -26,7 +27,7 @@ export function authMenu(): void {
                     return menus.mainMenu();
                 }
                 default: {
-                    console.log('Help Command');
+                    console.log(help);
                     return authMenu();
                 }
             }
