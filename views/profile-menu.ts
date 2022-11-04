@@ -13,9 +13,11 @@ export async function profileMenu(): Promise<void> {
 
     menu([
         {hotkey: '1', title: `Username: ${userEntity?.username}`},
-        {hotkey: '2', title: `Add a new book`},
-        {hotkey: '3', title: 'Logout'},
-        {hotkey: '4', title: 'Back'},
+        {hotkey: '2', title: `My books`},
+        {hotkey: '3', title: `Add a new book`},
+        {hotkey: '4', title: `Delete a book`},
+        {hotkey: '5', title: 'Logout'},
+        {hotkey: '6', title: 'Back'},
         {separator: true},
         {hotkey: '?', title: 'Help'},
     ], {
@@ -25,13 +27,19 @@ export async function profileMenu(): Promise<void> {
         if (item) {
             switch (item.hotkey) {
                 case '2': {
-                    return book.addBook();
+                    return book.myBooks();
                 }
                 case '3': {
+                    return book.addBook();
+                }
+                case '4': {
+                    return book.deleteBook();
+                }
+                case '5': {
                     authService.logout();
                     return menus.authMenu();
                 }
-                case '4': {
+                case '6': {
                     return menus.mainMenu();
                 }
                 case '?': {
